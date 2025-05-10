@@ -25,4 +25,6 @@ def generatePlanner():
             "response": chatbot_resp
         })
     except Exception as e:
-        return jsonify({"error": str(e)})
+        # Print the actual error message to the console
+        print(f"Error details: {str(e)}")  # Print the error in the logs
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
