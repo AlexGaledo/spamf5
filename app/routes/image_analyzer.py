@@ -31,7 +31,6 @@ def analyzeRequest():
             file,
             bucket,
             s3_key,
-            ExtraArgs={'ACL': 'public-read'}  # <--- Make it publicly accessible
         )
         sysin_image = "Analyze this image"  
         url = f'https://{bucket}.s3.amazonaws.com/{s3_key}'
