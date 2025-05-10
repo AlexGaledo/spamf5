@@ -37,6 +37,7 @@ def analyzeRequest():
         url = f'https://{bucket}.s3.amazonaws.com/{s3_key}'
 
         response = generate_with_image(sysin_image, url)
+        print("console debug: " + response)
         return jsonify({
             "response" : response
         })
