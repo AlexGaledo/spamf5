@@ -1,5 +1,7 @@
 from google import genai
 from google.genai import types
+import requests
+
 
 # Initialize the client
 client = genai.Client(
@@ -9,10 +11,14 @@ client = genai.Client(
 )
 
 
-def generate_with_image(text, image_path):
-    # Read image file as bytes
-    with open(image_path, "rb") as f:
-        image_bytes = f.read()
+def generate_with_image(text, image_url):
+    # Fetch image from the URL
+    response = requests.get(image_url)
+    if response.status_code != 200:
+        raise Exception("Failed to fetch image from URL")
+
+    # Read the image as bytes
+    image_bytes = response.content
     
     # Prepare the multimodal content
     contents = [
@@ -44,5 +50,3 @@ def generate_with_image(text, image_path):
         full_response += chunk.text
 
     return full_response
-
-
