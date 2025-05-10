@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-key = os.getenv("gemini_key")
+key = os.environ.get("gemini_key")
 client = genai.Client(api_key=key)
 
 # for itenary planner
@@ -23,4 +23,5 @@ def getChatbotResponse(user_input,sysin,location):
         return {"response":textResponse,"location":location}
     
     except Exception as e:
-        return {"response": "An error occurred while generating the response.", "location": location}
+        print(f"Error occurred: {str(e)}")  
+        return {"response": f"An error occurred: {str(e)}", "location": location}
