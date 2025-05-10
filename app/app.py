@@ -1,8 +1,8 @@
 from flask import Flask,jsonify
 from flask_cors import CORS
-from routes.chatbot_response import getChatbotResponse_bp
-from routes.itenary_planner import itenary_bp
-from routes.image_analyzer import analyzer_bp
+from .routes.chatbot_response import getChatbotResponse_bp
+from .routes.itenary_planner import itenary_bp
+from .routes.image_analyzer import analyzer_bp
 
 
 app = Flask(__name__)
