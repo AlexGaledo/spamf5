@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.services.vertex import generate_with_image
+from services.vertex import generate_with_image
 import os,boto3
 from uuid import uuid4
 
