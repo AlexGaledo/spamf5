@@ -31,10 +31,14 @@ def analyzeRequest():
             file,
             bucket,
             s3_key,
-            ExtraArgs={'ACL': 'public-read'}  # <--- Make it publicly accessible
+            
         )
         sysin_image = "Analyze this image"  
-        url = f'https://{bucket}.s3.amazonaws.com/{s3_key}'
+        url = s3.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': bucket, 'Key': s3_key},
+            ExpiresIn=3600  # Expiration time in seconds (1 hour)
+        )
 
         response = generate_with_image(sysin_image, url)
         print("console debug: " + response)
