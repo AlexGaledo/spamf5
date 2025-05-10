@@ -25,4 +25,4 @@ def generatePlanner():
             "response": chatbot_resp
         })
     except Exception as e:
-        return jsonify({"error":"str(e)error generating response || " + str(e)})
+        return jsonify({"error": str(e)})
