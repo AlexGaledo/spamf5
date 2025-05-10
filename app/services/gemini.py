@@ -12,11 +12,11 @@ def getChatbotResponse(user_input,sysin,location):
     if location is None: location = "not specified"
     try:
         prompt = f'{user_input}\n\nPreferred Location: {location}'
-        response = client.models.generate_content(
+        response =client.models.generate_content(
             model="gemini-2.0-flash",
-            contents=[prompt],
-            generation_config=types.GenerationConfig(candidate_count=1),
-            system_instruction=sysin
+            config=types.GenerateContentConfig(
+                system_instruction=sysin),
+            contents = [prompt]
         )
         textResponse = response.text
 
