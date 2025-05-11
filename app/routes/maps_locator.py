@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from services.gmaps import get_place_predictions, get_coordinates_from_place_id
 
-maps_locator_bp = Blueprint('/maps_locator', __name__)
+maps_locator_bp = Blueprint('maps_locator', __name__)
 
 @maps_locator_bp.route('/search-location', methods=['GET'])
 def search_location():
