@@ -13,12 +13,9 @@ client = genai.Client(
 
 def generate_with_image(text, image_url):
     # Fetch image from the URL
-    response = requests.get(image_url)
-    if response.status_code != 200:
-        raise Exception("Failed to fetch image from URL")
+    with open(image_url, "rb") as f:
+        image_bytes = f.read()
 
-    # Read the image as bytes
-    image_bytes = response.content
     
     # Prepare the multimodal content
     contents = [
@@ -50,3 +47,6 @@ def generate_with_image(text, image_url):
         full_response += chunk.text
 
     return full_response
+
+
+
