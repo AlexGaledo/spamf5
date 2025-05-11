@@ -1,7 +1,26 @@
+import base64
+import os
 from google import genai
 from google.genai import types
 import requests
 
+# Step 1: Decode the base64-encoded JSON key stored in the environment variable
+encoded_key = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+
+if not encoded_key:
+    raise ValueError("The GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
+
+# Step 2: Decode the base64 string and write it to a temporary file
+decoded_key = base64.b64decode(encoded_key)
+
+# Save the key to a temporary location (Render uses /tmp directory for temp files)
+key_file_path = '/tmp/google-key.json'
+
+with open(key_file_path, 'wb') as key_file:
+    key_file.write(decoded_key)
+
+# Step 3: Set the environment variable for Google Cloud SDK
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = key_file_path
 
 # Initialize the client
 client = genai.Client(
@@ -16,7 +35,6 @@ def generate_with_image(text, image_url):
     with open(image_url, "rb") as f:
         image_bytes = f.read()
 
-    
     # Prepare the multimodal content
     contents = [
         types.Content(
@@ -47,6 +65,3 @@ def generate_with_image(text, image_url):
         full_response += chunk.text
 
     return full_response
-
-
-
