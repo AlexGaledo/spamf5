@@ -1,7 +1,8 @@
 
 import requests
+import os
 
-GOOGLE_API_KEY = 'places_key'
+GOOGLE_API_KEY = os.getenv('places_key')
 
 def get_place_predictions(query, limit=5):
     autocomplete_url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json'
