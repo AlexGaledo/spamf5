@@ -4,6 +4,7 @@ from routes.chatbot_response import getChatbotResponse_bp
 from routes.itenary_planner import itenary_bp
 from routes.image_analyzer import analyzer_bp
 from routes.maps_locator import maps_locator_bp
+from routes.voice_recog import voice_bp
 
 
 
@@ -12,7 +13,7 @@ app.register_blueprint(getChatbotResponse_bp, url_prefix="/chatbot") # normal ch
 app.register_blueprint(itenary_bp, url_prefix="/iplanner") # itenary planner
 app.register_blueprint(analyzer_bp, url_prefix="/analyze") # image sacn
 app.register_blueprint(maps_locator_bp, url_prefix="/maps-locator") # maps locator
-CORS(app)
+app.register_blueprint(voice_bp, url_prefix="/voice") # voice recognition
 
 @app.route("/",methods=["GET","POST"])
 def home():
