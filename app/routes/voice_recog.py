@@ -24,7 +24,7 @@ def transcribe():
         # Configure the recognition settings
         config = speech.RecognitionConfig(
             encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,  # Adjust if needed based on your audio file
-            sample_rate_hertz=16000,  # Adjust according to the audio file sample rate
+            sample_rate_hertz=48000,  # Adjust according to the audio file sample rate
             language_code="en-US"
         )
 
