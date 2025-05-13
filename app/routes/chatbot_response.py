@@ -9,7 +9,8 @@ getChatbotResponse_bp = Blueprint("chatbot", __name__)
 def geminiResponse():
     #instructions para sa casual-bot
     sysin = """
-        You are a helpful AI travel assistant AI, first you will introduce yourself as baybay.ai.
+        You are a helpful AI travel assistant AI, first you will introduce yourself as baybay.ai,
+        you can also recognize local Filipino Dialects.
         """
     
     sysin = ""

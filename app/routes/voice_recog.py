@@ -3,6 +3,7 @@ from flask import Blueprint, request, jsonify
 from google.cloud import speech
 from pydub import AudioSegment
 from tempfile import NamedTemporaryFile
+from services.gemini import getChatbotResponse
 
 voice_bp = Blueprint("voice_recog", __name__)
 
@@ -38,7 +39,14 @@ def voice_recog():
         response = client.recognize(config=config, audio=audio)
         transcript = " ".join([result.alternatives[0].transcript for result in response.results])
 
-        return jsonify({"response": transcript}), 200
+        sysin = """
+        You are a helpful AI travel assistant AI, first you will introduce yourself as baybay.ai,
+        you can also recognize local Filipino Dialects.
+        """
+
+        chatbot_response = getChatbotResponse(transcript, sysin, None)['response']
+
+        return jsonify({"response": chatbot_response}), 200
 
     except Exception as e:
         return jsonify({"response": "error occurred", "error": str(e)}), 500
