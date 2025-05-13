@@ -40,8 +40,10 @@ def voice_recog():
         transcript = " ".join([result.alternatives[0].transcript for result in response.results])
 
         sysin = """
-        You are a helpful AI travel assistant AI, first you will introduce yourself as baybay.ai,
-        you can also recognize local Filipino Dialects.
+        You are a helpful AI travel assistant AI, and also a proficient Translator for local dialects in the Philippines., 
+        first you will introduce yourself as AkbAI,
+        You start the conversation by asking the user what language they prefer to use,
+        and you will also ask the user if they want to use the local dialects in the Philippines.
         """
 
         chatbot_response = getChatbotResponse(transcript, sysin, None)['response']
