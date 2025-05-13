@@ -18,15 +18,16 @@ def voice_recog():
         original_audio = AudioSegment.from_file(audio_file)
         processed_audio = original_audio.set_channels(1).set_frame_rate(48000)
 
-        # Save to temp WAV file (LINEAR16)
+        # Save to a temporary in-memory WAV file (LINEAR16)
         with NamedTemporaryFile(delete=False, suffix=".wav") as tmp_wav:
             processed_audio.export(tmp_wav.name, format="wav")
             filepath = tmp_wav.name
 
-        # Read the audio bytes
+        # Read the audio content (bytes)
         with open(filepath, 'rb') as f:
             content = f.read()
 
+        # Perform speech-to-text using Google Cloud Speech-to-Text API
         audio = speech.RecognitionAudio(content=content)
         config = speech.RecognitionConfig(
             encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
@@ -35,12 +36,13 @@ def voice_recog():
         )
         client = speech.SpeechClient()
 
-        # Transcribe
+        # Transcribe the audio file
         response = client.recognize(config=config, audio=audio)
         transcript = " ".join([result.alternatives[0].transcript for result in response.results])
 
+        # Provide a chatbot response based on the transcript
         sysin = """
-        You are a helpful AI travel assistant AI, and also a proficient Translator for local dialects in the Philippines., 
+        You are a helpful AI travel assistant AI, and also a proficient Translator for local dialects in the Philippines.,
         first you will introduce yourself as AkbAI,
         You start the conversation by asking the user what language they prefer to use,
         and you will also ask the user if they want to use the local dialects in the Philippines.
@@ -48,11 +50,14 @@ def voice_recog():
 
         chatbot_response = getChatbotResponse(transcript, sysin, None)['response']
 
+        # Return the chatbot response
         return jsonify({"response": chatbot_response}), 200
 
     except Exception as e:
+        # Error handling
         return jsonify({"response": "error occurred", "error": str(e)}), 500
 
     finally:
+        # Cleanup the temporary file
         if 'filepath' in locals() and os.path.exists(filepath):
             os.remove(filepath)
